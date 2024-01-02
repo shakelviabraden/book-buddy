@@ -9,6 +9,10 @@ const booksApi = createApi({
         getAllBooks: builder.query({
             query: () => '/books',
             providesTags: 'Books'
+        }),
+        getBookById: builder.query({
+            query: (id) => `/books/${id}`,
+            providesTags: 'Books'
         })
     })
 })
@@ -21,4 +25,4 @@ export const store = configureStore({
     getDefaultMiddleware().concat(booksApi.middleware)
 })
 
-export const { useGetAllBooksQuery } = booksApi
+export const { useGetAllBooksQuery, useGetBookByIdQuery } = booksApi
