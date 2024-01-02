@@ -34,7 +34,7 @@ const Books = () => {
 									<Card variant="outlined" sx={{ height: 425, width: 300, border: '5px solid PaleTurquoise' }}>
 										<Box sx={{ padding: 1 }}>
 											<CardContent sx={{ textAlign: 'center', paddingBottom: 0 }}>
-												<Typography variant="h6" component="div">
+												<Typography sx={{ fontSize: 15 }}>
 													{book.title}
 												</Typography>
 												<Typography color="text.secondary">
