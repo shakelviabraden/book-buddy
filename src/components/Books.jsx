@@ -26,7 +26,7 @@ const Books = () => {
 				<Box sx={{ display: 'flex', alignItems: 'center' }}>
 					<CircularProgress />
 				</Box> :
-				<Grid container spacing={3} padding={5}>
+				<Grid container spacing={3} padding={5} justifyContent="center">
 					{books ?
 						books.books.map((book) => {
 							return (
