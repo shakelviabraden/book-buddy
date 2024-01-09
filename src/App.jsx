@@ -26,10 +26,8 @@ function App() {
       if (token) {
         setUser(token)
         .unwrap()
-        .then((payload) => {dispatch(setLoggedUser(payload)), console.log(user)})
+        .then((payload) => {dispatch(setLoggedUser(payload))})
         .catch((error) =>  console.log(error))
-
-       
       }
     }
     loggedIn()
