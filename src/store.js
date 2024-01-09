@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 const booksApi = createApi({
     reducerPath: 'booksApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api' }),
-    tagTypes: ['Books'],
+    tagTypes: ['Books', 'Reservations'],
     endpoints: (builder) => ({
         getAllBooks: builder.query({
             query: () => '/books',
@@ -31,13 +31,24 @@ const booksApi = createApi({
         getBookReservations: builder.query({
             query: (token) => ({
                 url: `/reservations`,
-                method: 'Get',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             }),
-            invalidatesTags: ['Books']
+            providesTags: ['Reservations']
+        }),
+        returnBook: builder.mutation({
+            query: ({id, token}) => ({
+                url: `/reservations/${id}`,
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }),
+            invalidatesTags: ['Reservations']
         })
     })
 })
@@ -108,5 +119,5 @@ export const store = configureStore({
 })
 
 export const { setLoggedUser } = loggedUserSlice.actions
-export const { useGetAllBooksQuery, useGetBookByIdQuery, useCheckoutMutation, useGetBookReservationsQuery } = booksApi
+export const { useGetAllBooksQuery, useGetBookByIdQuery, useCheckoutMutation, useGetBookReservationsQuery, useReturnBookMutation } = booksApi
 export const { useSetUserMutation, useCreateUserMutation, useLoginUserMutation } = userApi
