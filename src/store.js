@@ -27,6 +27,17 @@ const booksApi = createApi({
                 }
             }),
             invalidatesTags: ['Books']
+        }),
+        getBookReservations: builder.query({
+            query: (token) => ({
+                url: `/reservations`,
+                method: 'Get',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }),
+            invalidatesTags: ['Books']
         })
     })
 })
@@ -97,5 +108,5 @@ export const store = configureStore({
 })
 
 export const { setLoggedUser } = loggedUserSlice.actions
-export const { useGetAllBooksQuery, useGetBookByIdQuery, useCheckoutMutation } = booksApi
+export const { useGetAllBooksQuery, useGetBookByIdQuery, useCheckoutMutation, useGetBookReservationsQuery } = booksApi
 export const { useSetUserMutation, useCreateUserMutation, useLoginUserMutation } = userApi
