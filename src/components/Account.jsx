@@ -2,7 +2,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import Cookies from "universal-cookie"
-import { useSelector } from "react-redux"
 import { useGetBookReservationsQuery, useReturnBookMutation } from "../store"
 
 //Material UI

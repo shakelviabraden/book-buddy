@@ -103,6 +103,10 @@ const loggedUserSlice = createSlice({
         setLoggedUser: (state, action) => {
             state.user = true,
             state.info = action.payload
+        },
+        logoutUser: (state) => {
+            state.user = false,
+            state.info = null
         }
     }
 
@@ -118,6 +122,6 @@ export const store = configureStore({
         getDefaultMiddleware().concat(booksApi.middleware, userApi.middleware)
 })
 
-export const { setLoggedUser } = loggedUserSlice.actions
+export const { setLoggedUser, logoutUser } = loggedUserSlice.actions
 export const { useGetAllBooksQuery, useGetBookByIdQuery, useCheckoutMutation, useGetBookReservationsQuery, useReturnBookMutation } = booksApi
 export const { useSetUserMutation, useCreateUserMutation, useLoginUserMutation } = userApi
