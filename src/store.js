@@ -26,7 +26,7 @@ const booksApi = createApi({
                     available: false
                 }
             }),
-            invalidatesTags: ['Books']
+            invalidatesTags: ['Books', 'Reservations']
         }),
         getBookReservations: builder.query({
             query: (token) => ({
