@@ -65,7 +65,7 @@ export const AuthForm = (props) => {
 						const numWeeks = 2;
 						const expiration = new Date();
 						expiration.setDate(expiration.getDate() + numWeeks * 7)
-						cookies.set('token', payload.token, {path: '/', expires: expiration})
+						cookies.set('token', payload.token, { path: '/', expires: expiration })
 					}
 				})
 				.catch((error) => setFormError(error.data.message))
@@ -79,7 +79,7 @@ export const AuthForm = (props) => {
 						const numWeeks = 2;
 						const expiration = new Date();
 						expiration.setDate(expiration.getDate() + numWeeks * 7)
-						cookies.set('token', payload.token, {path: '/', expires: expiration})
+						cookies.set('token', payload.token, { path: '/', expires: expiration })
 					}
 				})
 				.catch((error) => setFormError(error.data.message))
