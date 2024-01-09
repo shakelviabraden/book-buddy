@@ -8,11 +8,25 @@ const booksApi = createApi({
     endpoints: (builder) => ({
         getAllBooks: builder.query({
             query: () => '/books',
-            providesTags: 'Books'
+            providesTags: ['Books']
         }),
         getBookById: builder.query({
             query: (id) => `/books/${id}`,
-            providesTags: 'Books'
+            providesTags: ['Books']
+        }),
+        checkout: builder.mutation({
+            query: ({id, token}) => ({
+                url: `/books/${id}`,
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: {
+                    available: false
+                }
+            }),
+            invalidatesTags: ['Books']
         })
     })
 })
@@ -29,7 +43,8 @@ const userApi = createApi({
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-            })
+            }),
+            
         }),
 
         createUser: builder.mutation({
@@ -82,5 +97,5 @@ export const store = configureStore({
 })
 
 export const { setLoggedUser } = loggedUserSlice.actions
-export const { useGetAllBooksQuery, useGetBookByIdQuery } = booksApi
+export const { useGetAllBooksQuery, useGetBookByIdQuery, useCheckoutMutation } = booksApi
 export const { useSetUserMutation, useCreateUserMutation, useLoginUserMutation } = userApi
