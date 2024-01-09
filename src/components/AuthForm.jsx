@@ -1,5 +1,6 @@
 import React from "react";
-import { useCreateUserMutation, useLoginUserMutation } from "../store";
+import { useCreateUserMutation, useLoginUserMutation, setLoggedUser, useSetUserMutation } from "../store";
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -29,6 +30,10 @@ export const AuthForm = (props) => {
 
 	const [login] = useLoginUserMutation()
 	const [register] = useCreateUserMutation()
+	const dispatch = useDispatch()
+	const user = useSelector((state) => state.loggedUser)
+	const [setUser] = useSetUserMutation()
+
 
 	const cookies = new Cookies();
 
@@ -66,6 +71,11 @@ export const AuthForm = (props) => {
 						const expiration = new Date();
 						expiration.setDate(expiration.getDate() + numWeeks * 7)
 						cookies.set('token', payload.token, { path: '/', expires: expiration })
+
+						setUser(payload.token)
+							.unwrap()
+							.then((payload) => { dispatch(setLoggedUser(payload))})
+							.catch((error) => console.log(error))
 					}
 				})
 				.catch((error) => setFormError(error.data.message))
@@ -80,6 +90,11 @@ export const AuthForm = (props) => {
 						const expiration = new Date();
 						expiration.setDate(expiration.getDate() + numWeeks * 7)
 						cookies.set('token', payload.token, { path: '/', expires: expiration })
+
+						setUser(payload.token)
+							.unwrap()
+							.then((payload) => { dispatch(setLoggedUser(payload))})
+							.catch((error) => console.log(error))
 					}
 				})
 				.catch((error) => setFormError(error.data.message))

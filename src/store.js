@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const booksApi = createApi({
@@ -20,9 +20,8 @@ const booksApi = createApi({
 const userApi = createApi({
     reducerPath: 'userApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api' }),
-    tagTypes: ['Users'],
     endpoints: (builder) => ({
-        setUser: builder.query({
+        setUser: builder.mutation({
             query: (token) => ({
                 url: '/users/me',
                 method: 'GET',
@@ -30,8 +29,7 @@ const userApi = createApi({
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-            }),
-            providesTagsTags: 'User'
+            })
         }),
 
         createUser: builder.mutation({
@@ -42,8 +40,7 @@ const userApi = createApi({
                     'Content-Type': 'application/json',
                 },
                 body: body
-            }),
-            invalidatesTags: 'User'
+            })
         }),
         
         loginUser: builder.mutation({
@@ -54,20 +51,36 @@ const userApi = createApi({
                     'Content-Type': 'application/json',
                 },
                 body: body
-            }),
-            invalidatesTags: 'User'
+            })
         })
     })
+})
+
+const loggedUserSlice = createSlice({
+    name: 'loggedUser',
+    initialState: {
+        user: false,
+        info: null
+    },
+    reducers: {
+        setLoggedUser: (state, action) => {
+            state.user = true,
+            state.info = action.payload
+        }
+    }
+
 })
 
 export const store = configureStore({
     reducer: {
         booksApi: booksApi.reducer,
-        userApi: userApi.reducer
+        userApi: userApi.reducer,
+        loggedUser: loggedUserSlice.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(booksApi.middleware, userApi.middleware)
 })
 
+export const { setLoggedUser } = loggedUserSlice.actions
 export const { useGetAllBooksQuery, useGetBookByIdQuery } = booksApi
-export const { useSetUserQuery, useCreateUserMutation, useLoginUserMutation } = userApi
+export const { useSetUserMutation, useCreateUserMutation, useLoginUserMutation } = userApi
