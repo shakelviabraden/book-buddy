@@ -2,7 +2,7 @@ import React from "react";
 import { useCreateUserMutation, useLoginUserMutation, setLoggedUser, useSetUserMutation } from "../store";
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 import {
@@ -175,8 +175,13 @@ export const AuthForm = (props) => {
 										onChange={handleFormChange}
 									/>
 								</FormControl>
-								<Box sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}>
-									<Button onClick={handleSubmit} variant="outlined">{location}</Button>
+								<Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+									{location === 'register' ? 
+									<Typography>Already have an account? <Link to='/login' style={{textDecoration: 'none', color: 'PaleTurquoise', fontWeight: 'bold'}}>Log in here.</Link></Typography> : <Typography>No account? <Link to='/register' style={{textDecoration: 'none', color: 'PaleTurquoise', fontWeight: 'bold'}}>Register here.</Link></Typography>}
+								</Box>
+								<Box sx={{ marginTop: 1, display: 'flex', flexDirection:'column', alignItems: 'center'}}>
+									<Button onClick={handleSubmit} variant="outlined" sx={{width: 100, marginBottom: 1}}>{location}</Button>
+									<Button onClick={() => navigate('/')} variant="outlined">Continue as guest</Button>
 								</Box>
 							</Box>
 						</>}
