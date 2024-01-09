@@ -87,7 +87,7 @@ export const SingleBook = () => {
 						actionError ? 
 						<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
 						<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-							You must be logged in to perform this action.
+							You must be logged in to perform this action. <Link to='/login'>Login</Link> or <Link to='/register'>sign up</Link> here.
 						</Alert>
 					</Snackbar> 
 					: 
