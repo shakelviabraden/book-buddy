@@ -2,6 +2,6 @@
 
 export const Account = () => {
     return (
-        <h1>My Login page</h1>
+        <h1>My account page</h1>
     )
 }

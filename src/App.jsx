@@ -4,7 +4,11 @@ import { Route, Routes } from 'react-router-dom'
 import { setLoggedUser, useSetUserMutation } from './store'
 import Cookies from 'universal-cookie'
 
+//Assets
 import bookLogo from './assets/books.png'
+
+//Components
+import { Account } from './components/Account'
 
 import Books from './components/Books'
 import { NavBar } from './components/Navigations'
@@ -15,7 +19,6 @@ import { Register } from './components/Register'
 
 function App() {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.loggedUser)
   const cookies = new Cookies();
   const [setUser] = useSetUserMutation()
 
@@ -40,7 +43,7 @@ function App() {
         <Route path='/' element={<Books />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/account' element={<h1>account</h1>} />
+        <Route path='/account' element={<Account />} />
         <Route path='/book/:id' element={<SingleBook />} />
       </Routes>
     </>
